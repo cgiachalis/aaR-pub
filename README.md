@@ -2,6 +2,6 @@
 Asset Allocation and Model Portfolios in R
 
  - [Introduction](aaR_intro.md)
- - ETF Model Portfolio
+ - [ETF Model Portfolios](aaR_models.md)
  - Target Volatility Strategy
 
