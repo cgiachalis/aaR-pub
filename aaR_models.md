@@ -1,6 +1,6 @@
 ETF Model Porfolios
 ================
-13-Mar-2017
+19-Mar-2017
 
 -   [The Model Portfolios](#the-model-portfolios)
 -   [The ETF Universe](#the-etf-universe)
@@ -26,15 +26,11 @@ ETF Model Porfolios
 | Equity       | US Small Cap      | IWM    |    5   |     0     |      2     |    0   |      0     |
 | Equity       | Int'l DM          | EFA    |   25   |     17    |     17     |   10   |     10     |
 | Equity       | Emerging Mkts     | EEM    |   10   |     6     |      6     |    2   |      0     |
-| Equity       | Asia ex Japan     | AAXJ   |    0   |     0     |      0     |    0   |      0     |
-| Fixed Income | Short Term UST    | SHY    |    0   |     0     |      0     |    0   |      0     |
 | Fixed Income | Long Term UST     | TLT    |    5   |     20    |     15     |   36   |     40     |
 | Fixed Income | TIPS              | TIP    |    0   |     0     |      0     |    5   |      5     |
 | Fixed Income | Investement Grade | LQD    |   10   |     15    |     12     |   17   |     17     |
 | Fixed Income | High Yield        | HYG    |    5   |     5     |      8     |    8   |      8     |
 | Fixed Income | Emerging Mkts     | EMB    |    0   |     0     |      2     |    6   |      0     |
-| Alternatives | Precious Metals   | GLD    |    0   |     0     |      0     |    0   |      0     |
-| Alternatives | Energy            | USO    |    0   |     0     |      0     |    0   |      0     |
 | Alternatives | Overall Cmd       | DBC    |    5   |     5     |      3     |    0   |      0     |
 | Alternatives | US REIT           | VNQ    |    5   |     5     |      0     |    6   |      0     |
 | Alternatives | Int REIT          | RWX    |    0   |     0     |      5     |    0   |     10     |
