@@ -9,7 +9,7 @@ Target Volatility Strategy
 Introduction
 ------------
 
-The `tvs()` is intented to create a risk targeted exposure. In order to achieve the desired target volatility level, the `tvs()` will allocate between a risky security and a cash based on the asset's forecasted and realised volatility.
+The `tvs()` is intented to create a risk targeted exposure. In order to achieve the desired target volatility level, the `tvs()` will allocate between a risky asset and a cash based on the asset's forecasted and realised volatility.
 
 On this example:
 
