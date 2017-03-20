@@ -1,6 +1,6 @@
 Target Volatility Strategy
 ================
-19-Mar-2017
+20-Mar-2017
 
 -   [Introduction](#introduction)
 -   [Run tvs model](#run-tvs-model)
@@ -16,7 +16,7 @@ On this example:
 -   ETF: iShares MSCI EAFE (EFA)
 -   Target Vol: 15%
 -   Re-allocation buffer 5%
--   Forecast method: `ewma` with 290 days window
+-   Forecasting method: `ewma` with 290 days window
 -   No leverage
 
 Run tvs model
