@@ -1,6 +1,6 @@
 aaR - Intro
 ================
-19-Mar-2017
+20-Mar-2017
 
 -   [Simple Allocation](#simple-allocation)
 -   [Calendar Rebalancing](#calendar-rebalancing)
@@ -57,7 +57,7 @@ res
 Calendar Rebalancing
 --------------------
 
-Rebalance portfolio every quarter. On this example rebalancing takes place on Feb, May, Aug, Nov.
+Rebalance the portfolio every quarter. On this example rebalancing takes place on Feb, May, Aug, Nov.
 
 ``` r
 res <- portfolio_returns(prices = data, method = "calendar",
@@ -104,7 +104,7 @@ res
 Sell May
 --------
 
-Rebalance portfolio by reducing the equity exposure at the end of May and reverting back to normal weights at the end of Oct.
+Rebalance the portfolio by reducing the equity exposure at the end of May and reverting back to normal weights at the end of Oct.
 
 ``` r
 data01 <- data[,c("SPY","TLT")]
@@ -151,7 +151,7 @@ summary(obj = res, bkm = data01[,1], .name = "Sell May")
 All Calendar Periods
 --------------------
 
-Rebalance portfolio by all calendar periods and compare.
+Rebalance the portfolio by all calendar periods and compare.
 
 ``` r
 pd <-c("weeks", "months", "quarters", "quarters2", "semi-annual", "years")
