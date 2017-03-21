@@ -1,6 +1,6 @@
 Target Volatility Strategy
 ================
-20-Mar-2017
+21-Mar-2017
 
 -   [Introduction](#introduction)
 -   [Run tvs model](#run-tvs-model)
@@ -66,7 +66,7 @@ res
 Analytics
 ---------
 
-`analytics()` returns a number of diagnositic graphs to evaluate the target volatility strategy.
+`analytics()` returns a number of diagnostic graphs in order to evaluate the target volatility strategy.
 
 ``` r
 an.vis <- analytics(x = res)
