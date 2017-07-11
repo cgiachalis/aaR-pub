@@ -1,12 +1,13 @@
 aaR - Intro
 ================
-16-Jun-2017
+11-Jul-2017
 
 -   [Simple Allocation](#simple-allocation)
 -   [Calendar Rebalancing](#calendar-rebalancing)
 -   [Sell May](#sell-may)
 -   [All Calendar Periods](#all-calendar-periods)
--   [Bands](#bands)
+-   [Bands on Securities](#bands-on-securities)
+-   [Bands on Asset Classes](#bands-on-asset-classes)
 
 Examples of rebalancing methods in order to build model portfolios based on `aaR` package.
 
@@ -30,13 +31,6 @@ res
 
     Portfolio : 01 - simple portfolio 
     Method    : none rebalancing 
-
-    Weights:
-
-        SPY    TLT    EFA
-     33.33% 33.33% 33.33%
-
-    Slippage: NO
 
     +-------------------------------------+
 
@@ -138,7 +132,7 @@ summary(obj = res, bkm = data01[,1], .name = "Sell May")
 
     # A tibble: 12 x 2
            statistic    `Sell May`
-     *         <chr>         <chr>
+               <chr>         <chr>
      1        Period Jan-05/Oct-16
      2          Cagr        8.71 %
      3     An.Return        8.91 %
@@ -152,7 +146,7 @@ summary(obj = res, bkm = data01[,1], .name = "Sell May")
     11    Info.Ratio          0.17
     12      Turnover        2.06 %
 
-![](aaR_intro_files/figure-markdown_github/aar03b-1.png)
+![](aaR_intro_files/figure-markdown_github-ascii_identifiers/aar03b-1.png)
 
 All Calendar Periods
 --------------------
@@ -183,8 +177,8 @@ res <- purrr::map(pd, ~portfolio_returns(prices = data, method = "calendar",
 | Info.Ratio    | NaN           | NaN           | NaN           | NaN           | NaN           | NaN           |
 | Turnover      | 0.76 %        | 0.33 %        | 0.21 %        | 0.20 %        | 0.17 %        | 0.11 %        |
 
-Bands
------
+Bands on Securities
+-------------------
 
 Rebalance the portfolio using band limits.
 
@@ -235,5 +229,69 @@ res
     10    Active.Ret        0.00 %
     11    Info.Ratio           NaN
     12      Turnover        0.23 %
+
+    +-------------------------------------+
+
+Bands on Asset Classes
+----------------------
+
+``` r
+weights = c(10, 10, 30, 20, 30)/100
+groups <- list(EQ = c("EEM", "EFA"),
+               FI = c("SHY", "TLT"),
+               ALT = "GLD")
+
+res <- portfolio_returns(prices = data2, method = "bands",
+                         weights = weights, 
+                         bands = 3/100, groups = groups,
+                         slippage = 0.15/100, name = "05 - asset class bands", 
+                         verbose = TRUE)
+res
+```
+
+
+    +-------------------------------------+
+    +     Asset Allocation Portfolio      +
+    +-------------------------------------+
+
+
+    Portfolio : 05 - asset class bands 
+    Method    : bands rebalancing 
+
+    Bands:
+
+        EQ    FI   ALT
+     3.00% 3.00% 3.00%
+
+    Group Weights:
+
+         EQ     FI    ALT
+     50.00% 40.00% 10.00%
+
+    Weights:
+
+        GLD    TLT    EEM    EFA    SHY
+     10.00% 10.00% 30.00% 20.00% 30.00%
+
+    Slippage:
+
+       GLD   TLT   EEM   EFA   SHY
+     0.15% 0.15% 0.15% 0.15% 0.15%
+
+    +-------------------------------------+
+
+           statistic         value
+    1         Period Jan-12/Oct-16
+    2           Cagr        2.20 %
+    3      An.Return        2.29 %
+    4  An.Volatility        6.79 %
+    5       Rew.Risk          0.34
+    6          MaxDD      -15.92 %
+    7        MaxDDur          1.44
+    8          Omega          1.51
+    9    Track.Error        0.00 %
+    10    Active.Ret        0.00 %
+    11    Info.Ratio           NaN
+    12      Turnover        0.07 %
 
     +-------------------------------------+
