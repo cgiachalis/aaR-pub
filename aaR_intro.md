@@ -1,6 +1,6 @@
 aaR - Intro
 ================
-11-Jul-2017
+04-Nov-2017
 
 -   [Simple Allocation](#simple-allocation)
 -   [Calendar Rebalancing](#calendar-rebalancing)
@@ -9,46 +9,52 @@ aaR - Intro
 -   [Bands on Securities](#bands-on-securities)
 -   [Bands on Asset Classes](#bands-on-asset-classes)
 
-Examples of rebalancing methods in order to build model portfolios based on `aaR` package.
+Examples using the `aaR` package for rebalancing portfolios under different methods.
 
 ------------------------------------------------------------------------
 
 Simple Allocation
 -----------------
 
-Allocate at the beginning and no further rebalancing thereafter.
+Allocate at the beginning of period with no rebalancing thereafter.
 
 ``` r
 res <- portfolio_returns(prices = data, method = "none", name = "01 - simple portfolio", verbose = TRUE)
-res
+
+print(res, col = FALSE)
 ```
 
-
-    +-------------------------------------+
-    +     Asset Allocation Portfolio      +
-    +-------------------------------------+
+    _______________________________ * aaR Portfolio * ______________________________
 
 
     Portfolio : 01 - simple portfolio 
-    Method    : none rebalancing 
+    Method    : no rebalancing 
 
-    +-------------------------------------+
 
-           statistic         value
-    1         Period Jan-05/Oct-16
-    2           Cagr        6.27 %
-    3      An.Return        6.35 %
-    4  An.Volatility        8.34 %
-    5       Rew.Risk          0.76
-    6          MaxDD      -36.06 %
-    7        MaxDDur          4.19
-    8          Omega          2.64
-    9    Track.Error        0.00 %
-    10    Active.Ret        0.00 %
-    11    Info.Ratio           NaN
-    12      Turnover        0.00 %
+    Profile - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-    +-------------------------------------+
+     Assets Weigths
+        SPY  33.33%
+        TLT  33.33%
+        EFA  33.33%
+
+
+    Performance Summary - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+
+         statistic         value
+            Period Jan-05/Oct-16
+              Cagr        6.27 %
+         An.Return        6.35 %
+     An.Volatility        8.34 %
+          Rew.Risk          0.76
+             MaxDD      -36.06 %
+           MaxDDur          4.19
+             Omega          2.64
+       Track.Error        0.00 %
+        Active.Ret        0.00 %
+        Info.Ratio           NaN
+          Turnover        0.00 %
+    ________________________________________________________________________________
 
 Calendar Rebalancing
 --------------------
@@ -59,46 +65,42 @@ Rebalance the portfolio every quarter. On this example rebalancing takes place o
 res <- portfolio_returns(prices = data, method = "calendar",
                          period = "quarters2", weights = c(0.3,0.3,0.4), 
                          slippage = 0.15/100, name = "02 - simple portfolio", verbose = TRUE)
-res
+
+print(res, col = FALSE)
 ```
 
-
-    +-------------------------------------+
-    +     Asset Allocation Portfolio      +
-    +-------------------------------------+
+    _______________________________ * aaR Portfolio * ______________________________
 
 
     Portfolio : 02 - simple portfolio 
     Method    : calendar rebalancing 
     Period    : quarters2 
 
-    Weights:
 
-        SPY    TLT    EFA
-     30.00% 30.00% 40.00%
+    Profile - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-    Slippage:
+     Assets Weigths    TC
+        SPY  30.00% 0.15%
+        TLT  30.00% 0.15%
+        EFA  40.00% 0.15%
 
-       SPY   TLT   EFA
-     0.15% 0.15% 0.15%
 
-    +-------------------------------------+
+    Performance Summary - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-           statistic         value
-    1         Period Jan-05/Oct-16
-    2           Cagr        6.74 %
-    3      An.Return        6.91 %
-    4  An.Volatility        9.82 %
-    5       Rew.Risk           0.7
-    6          MaxDD      -40.15 %
-    7        MaxDDur          3.32
-    8          Omega          2.48
-    9    Track.Error        0.00 %
-    10    Active.Ret        0.00 %
-    11    Info.Ratio           NaN
-    12      Turnover        0.20 %
-
-    +-------------------------------------+
+         statistic         value
+            Period Jan-05/Oct-16
+              Cagr        6.74 %
+         An.Return        6.91 %
+     An.Volatility        9.82 %
+          Rew.Risk           0.7
+             MaxDD      -40.15 %
+           MaxDDur          3.32
+             Omega          2.48
+       Track.Error        0.00 %
+        Active.Ret        0.00 %
+        Info.Ratio           NaN
+          Turnover        0.20 %
+    ________________________________________________________________________________
 
 Sell May
 --------
@@ -154,12 +156,12 @@ All Calendar Periods
 Rebalance the portfolio by all calendar periods and compare.
 
 ``` r
-pd <-c("weeks", "months", "quarters", "quarters2", "semi-annual", "years")
+pd <- c("weeks", "months", "quarters", "quarters2", "semi-annual", "years")
 
 res <- purrr::map(pd, ~portfolio_returns(prices = data, method = "calendar",
                          period = .x, weights = c(0.3,0.3,0.4), 
                          slippage = 0.15/100, name = .x, verbose = TRUE)) %>% 
-                         setNames(.,pd)
+                         setNames(pd)
 ```
 
 | statistic     | weeks         | months        | quarters      | quarters2     | semi-annual   | years         |
@@ -187,50 +189,41 @@ res <- portfolio_returns(prices = data, method = "bands",
                          weights = c(0.3,0.3,0.4), 
                          bands = c(2.5/100, 3/100, 2/100),
                          slippage = 0.15/100, name = "05 - bands portfolio", verbose = TRUE)
-res
+print(res, col = FALSE)
 ```
 
-
-    +-------------------------------------+
-    +     Asset Allocation Portfolio      +
-    +-------------------------------------+
+    _______________________________ * aaR Portfolio * ______________________________
 
 
     Portfolio : 05 - bands portfolio 
     Method    : bands rebalancing 
+    Bands     : asset level 
 
-    Bands:
 
-       SPY   TLT   EFA
-     2.50% 3.00% 2.00%
+    Profile - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-    Weights:
+     Assets Weigths Bands    TC
+        SPY  30.00% 2.50% 0.15%
+        TLT  30.00% 3.00% 0.15%
+        EFA  40.00% 2.00% 0.15%
 
-        SPY    TLT    EFA
-     30.00% 30.00% 40.00%
 
-    Slippage:
+    Performance Summary - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-       SPY   TLT   EFA
-     0.15% 0.15% 0.15%
-
-    +-------------------------------------+
-
-           statistic         value
-    1         Period Jan-05/Oct-16
-    2           Cagr        6.65 %
-    3      An.Return        6.84 %
-    4  An.Volatility        9.84 %
-    5       Rew.Risk          0.69
-    6          MaxDD      -40.78 %
-    7        MaxDDur          3.48
-    8          Omega          2.44
-    9    Track.Error        0.00 %
-    10    Active.Ret        0.00 %
-    11    Info.Ratio           NaN
-    12      Turnover        0.23 %
-
-    +-------------------------------------+
+         statistic         value
+            Period Jan-05/Oct-16
+              Cagr        6.65 %
+         An.Return        6.84 %
+     An.Volatility        9.84 %
+          Rew.Risk          0.69
+             MaxDD      -40.78 %
+           MaxDDur          3.48
+             Omega          2.44
+       Track.Error        0.00 %
+        Active.Ret        0.00 %
+        Info.Ratio           NaN
+          Turnover        0.23 %
+    ________________________________________________________________________________
 
 Bands on Asset Classes
 ----------------------
@@ -246,52 +239,48 @@ res <- portfolio_returns(prices = data2, method = "bands",
                          bands = 3/100, groups = groups,
                          slippage = 0.15/100, name = "05 - asset class bands", 
                          verbose = TRUE)
-res
+print(res, col = FALSE)
 ```
 
-
-    +-------------------------------------+
-    +     Asset Allocation Portfolio      +
-    +-------------------------------------+
+    _______________________________ * aaR Portfolio * ______________________________
 
 
     Portfolio : 05 - asset class bands 
     Method    : bands rebalancing 
+    Bands     : group level 
 
-    Bands:
 
-        EQ    FI   ALT
-     3.00% 3.00% 3.00%
+    Profile - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-    Group Weights:
+     Assets Weigths    TC
+        GLD  10.00% 0.15%
+        TLT  10.00% 0.15%
+        EEM  30.00% 0.15%
+        EFA  20.00% 0.15%
+        SHY  30.00% 0.15%
 
-         EQ     FI    ALT
-     50.00% 40.00% 10.00%
 
-    Weights:
+     Groups Weigths Bands
+         EQ  50.00% 3.00%
+         FI  40.00% 3.00%
+        ALT  10.00% 3.00%
 
-        GLD    TLT    EEM    EFA    SHY
-     10.00% 10.00% 30.00% 20.00% 30.00%
 
-    Slippage:
+    Performance Summary - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-       GLD   TLT   EEM   EFA   SHY
-     0.15% 0.15% 0.15% 0.15% 0.15%
-
-    +-------------------------------------+
-
-           statistic         value
-    1         Period Jan-12/Oct-16
-    2           Cagr        2.20 %
-    3      An.Return        2.29 %
-    4  An.Volatility        6.79 %
-    5       Rew.Risk          0.34
-    6          MaxDD      -15.92 %
-    7        MaxDDur          1.44
-    8          Omega          1.51
-    9    Track.Error        0.00 %
-    10    Active.Ret        0.00 %
-    11    Info.Ratio           NaN
-    12      Turnover        0.07 %
-
-    +-------------------------------------+
+         statistic        EQ_mkv        FI_mkv       ALT_mkv     Total_mkv
+            Period Jan-12/Oct-16 Jan-12/Oct-16 Jan-12/Oct-16 Jan-12/Oct-16
+              Cagr        3.75 %        1.93 %       -5.82 %        2.20 %
+         An.Return        4.14 %        1.88 %       -3.42 %        2.29 %
+     An.Volatility       11.41 %        3.29 %       21.81 %        6.79 %
+          Rew.Risk          0.36          0.57         -0.16          0.34
+             MaxDD      -26.75 %       -5.75 %      -50.20 %      -15.92 %
+           MaxDDur          1.44          2.19          3.99          1.44
+             Omega          1.59             2          0.81          1.51
+       Track.Error        0.00 %        0.00 %        0.00 %        0.00 %
+        Active.Ret        0.00 %        0.00 %        0.00 %        0.00 %
+        Info.Ratio           NaN           NaN           NaN           NaN
+       Return.Ctbr        9.57 %        3.82 %       -2.48 %       10.90 %
+         Risk.Ctbr        7.12 %        0.00 %        0.69 %        7.81 %
+       % Risk.Ctbr       91.08 %        0.03 %        8.90 %      100.00 %
+    ________________________________________________________________________________

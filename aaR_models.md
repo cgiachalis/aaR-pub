@@ -1,6 +1,6 @@
 ETF Model Porfolios
 ================
-19-Mar-2017
+04-Nov-2017
 
 -   [The Model Portfolios](#the-model-portfolios)
 -   [The ETF Universe](#the-etf-universe)
@@ -45,11 +45,10 @@ res   <- pmap(params, portfolio_returns, method = "calendar", period = "months")
 # Extract and plot combo
 map(res,"main") %>% 
 melt_xts_all(.) %>% 
-gg_combo(p_title = "ETF Model Porftolios", ncol = 3, col_palette = pal) %>%
-                    grid::grid.draw(.)
+gg_combo(p_title = "ETF Model Porftolios", ncol = 3, col_palette = pal)
 ```
 
-![](aaR_models_files/figure-markdown_github/model-1.png)
+![](aaR_models_files/figure-markdown_github-ascii_identifiers/model-1.png)
 
 ### Summary
 
