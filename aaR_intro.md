@@ -1,13 +1,13 @@
-aaR - Intro
+aaR - Introduction
 ================
-04-Nov-2017
+09-Dec-2017
 
 -   [Simple Allocation](#simple-allocation)
 -   [Calendar Rebalancing](#calendar-rebalancing)
 -   [Sell May](#sell-may)
 -   [All Calendar Periods](#all-calendar-periods)
 -   [Bands on Securities](#bands-on-securities)
--   [Bands on Asset Classes](#bands-on-asset-classes)
+-   [Bands on Asset Groups](#bands-on-asset-groups)
 
 Examples using the `aaR` package for rebalancing portfolios under different methods.
 
@@ -19,7 +19,8 @@ Simple Allocation
 Allocate at the beginning of period with no rebalancing thereafter.
 
 ``` r
-res <- portfolio_returns(prices = data, method = "none", name = "01 - simple portfolio", verbose = TRUE)
+res <- portfolio_returns(prices = data, method = "never", 
+                         name = "01 - simple portfolio")
 
 print(res, col = FALSE)
 ```
@@ -64,7 +65,7 @@ Rebalance the portfolio every quarter. On this example rebalancing takes place o
 ``` r
 res <- portfolio_returns(prices = data, method = "calendar",
                          period = "quarters2", weights = c(0.3,0.3,0.4), 
-                         slippage = 0.15/100, name = "02 - simple portfolio", verbose = TRUE)
+                         slippage = 0.15/100, name = "02 - simple portfolio")
 
 print(res, col = FALSE)
 ```
@@ -127,7 +128,7 @@ head(wts)
 
 ``` r
 res <- portfolio_returns(prices = data01, weights = wts,  method = "irregular",
-                         slippage = 0.15/100, name = "03 - sell may portfolio", verbose = TRUE)
+                         slippage = 0.15/100, name = "03 - sell may portfolio")
 
 summary(obj = res, bkm = data01[,1], .name = "Sell May")
 ```
@@ -148,7 +149,7 @@ summary(obj = res, bkm = data01[,1], .name = "Sell May")
     11    Info.Ratio          0.17
     12      Turnover        2.06 %
 
-![](aaR_intro_files/figure-markdown_github-ascii_identifiers/aar03b-1.png)
+![](aaR_intro_files/figure-markdown_github/aar03b-1.png)
 
 All Calendar Periods
 --------------------
@@ -160,7 +161,7 @@ pd <- c("weeks", "months", "quarters", "quarters2", "semi-annual", "years")
 
 res <- purrr::map(pd, ~portfolio_returns(prices = data, method = "calendar",
                          period = .x, weights = c(0.3,0.3,0.4), 
-                         slippage = 0.15/100, name = .x, verbose = TRUE)) %>% 
+                         slippage = 0.15/100, name = .x)) %>% 
                          setNames(pd)
 ```
 
@@ -188,7 +189,7 @@ Rebalance the portfolio using band limits.
 res <- portfolio_returns(prices = data, method = "bands",
                          weights = c(0.3,0.3,0.4), 
                          bands = c(2.5/100, 3/100, 2/100),
-                         slippage = 0.15/100, name = "05 - bands portfolio", verbose = TRUE)
+                         slippage = 0.15/100, name = "05 - bands portfolio")
 print(res, col = FALSE)
 ```
 
@@ -225,8 +226,8 @@ print(res, col = FALSE)
           Turnover        0.23 %
     ________________________________________________________________________________
 
-Bands on Asset Classes
-----------------------
+Bands on Asset Groups
+---------------------
 
 ``` r
 weights = c(10, 10, 30, 20, 30)/100
@@ -237,8 +238,8 @@ groups <- list(EQ = c("EEM", "EFA"),
 res <- portfolio_returns(prices = data2, method = "bands",
                          weights = weights, 
                          bands = 3/100, groups = groups,
-                         slippage = 0.15/100, name = "05 - asset class bands", 
-                         verbose = TRUE)
+                         slippage = 0.15/100,
+                         name = "05 - asset class bands")
 print(res, col = FALSE)
 ```
 
